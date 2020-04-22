@@ -8,15 +8,15 @@ import webpackHotMiddleware from 'webpack-hot-middleware';
 import cookieParser from 'cookie-parser';
 import serverRenderer from './middleware/serverRenderer';
 
+const webpack = require('webpack');
+const webpackConfig = require('../../webpack.dev');
 require('dotenv').config();
 
-const webpack = require('webpack');
-const webpackConfig = require('../../webpack.config');
-
-const compiler = webpack(webpackConfig);
 const app = express();
 
-if (process.env.DEV === 'development') {
+if (process.env.MODE === 'development') {
+  const compiler = webpack(webpackConfig);
+
   app.use(
     webpackDevMiddleware(compiler, {
       publicPath: webpackConfig.output.publicPath,

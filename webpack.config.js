@@ -1,11 +1,7 @@
 const path = require('path');
-const webpack = require('webpack');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
-  mode: 'production',
-  entry: ['@babel/polyfill', 'webpack-hot-middleware/client', './src/client'],
-  plugins: [new webpack.HotModuleReplacementPlugin()],
   output: {
     filename: 'js/[name].bundle.js',
     path: path.resolve(__dirname, 'build'),
@@ -26,6 +22,8 @@ module.exports = {
                 {
                   ssr: true,
                   displayName: true,
+                  minify: true,
+                  transpileTemplateLiterals: true,
                 },
               ],
             ],

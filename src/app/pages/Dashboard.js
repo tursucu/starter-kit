@@ -1,9 +1,10 @@
 import React from 'react';
+import Para from '../styles/Para';
 
 function Dashboard() {
   return (
     <div>
-      <p>Dashboard</p>
+      <Para>lOREM</Para>
     </div>
   );
 }
