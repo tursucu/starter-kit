@@ -4,6 +4,7 @@ import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 import NotFound from './pages/NotFound';
 import { AuthContext } from './helpers/withAuth';
+import GlobalStyles from './styles/GlobalStyles';
 
 function Router() {
   const { data, loading } = useContext(AuthContext);
@@ -12,15 +13,18 @@ function Router() {
   }
 
   return (
-    <Switch>
-      <Route exact path="/login">
-        {data.currentUser ? <Redirect to="/dashboard" /> : <Login />}
-      </Route>
-      <Route exact path="/dashboard">
-        {!data.currentUser ? <Redirect to="/login" /> : <Dashboard />}
-      </Route>
-      <Route component={NotFound} />
-    </Switch>
+    <>
+      <Switch>
+        <Route exact path="/login">
+          {data.currentUser ? <Redirect to="/dashboard" /> : <Login />}
+        </Route>
+        <Route exact path="/dashboard">
+          {!data.currentUser ? <Redirect to="/login" /> : <Dashboard />}
+        </Route>
+        <Route component={NotFound} />
+      </Switch>
+      <GlobalStyles />
+    </>
   );
 }
 

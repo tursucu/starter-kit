@@ -22,8 +22,7 @@ module.exports = {
                 {
                   ssr: true,
                   displayName: true,
-                  minify: true,
-                  transpileTemplateLiterals: true,
+                  pure: true,
                 },
               ],
             ],
