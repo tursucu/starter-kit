@@ -15,6 +15,7 @@ import HTML from '../components/html';
 const routerContext = {};
 
 const serverRenderer = async (req, res) => {
+  // Connect API
   const client = await new ApolloClient({
     ssrMode: true,
     link: createHttpLink({
@@ -40,21 +41,28 @@ const serverRenderer = async (req, res) => {
     </ApolloProvider>
   );
 
-  renderToStringWithData(Application).then((content) => {
-    const initialApolloState = client.extract();
-    const helmet = Helmet.renderStatic();
-    const styleTags = sheet.getStyleElement();
-    const html = (
-      <HTML
-        content={content}
-        state={initialApolloState}
-        styleTags={styleTags}
-        helmet={helmet}
-      />
-    );
+  // Server Side Rendering
+  renderToStringWithData(Application)
+    .then((content) => {
+      const initialApolloState = client.extract();
+      const helmet = Helmet.renderStatic();
+      const styleTags = sheet.getStyleElement();
+      const html = (
+        <HTML
+          content={content}
+          state={initialApolloState}
+          styleTags={styleTags}
+          helmet={helmet}
+        />
+      );
 
-    return res.send(`<!DOCTYPE html>\n${renderToStaticMarkup(html)}`);
-  });
+      return res.send(`<!DOCTYPE html>\n${renderToStaticMarkup(html)}`);
+    })
+    .catch(() => {
+      res.status(500);
+      res.send('<!doctype html><html><body><p>Error</p></body></html>');
+      res.end();
+    });
 };
 
 export default serverRenderer;
